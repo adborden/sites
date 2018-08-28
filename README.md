@@ -51,6 +51,30 @@ means you can create a single ci-sites-s3-deployer user with only access to push
 to your s3 site buckets.
 
 
+## What it looks like
+
+First, the terraform templates are validated in CI.
+
+Then, CI runs the terraform templates and generates a plan which is saved to the
+workspace.
+
+![Screenshot of CI showing the plan generation](docs/images/screenshot-plan.png)
+
+Then the CI waits for manual approval. This is where you should inspect the
+generated plan to make sure it's as expected.
+
+![Screenshot of CI showing the hold an approval workflow](docs/images/screenshot-hold.png)
+
+Once you've determined the plan is acceptable, you click approve.
+
+![Screenshot of CI showing approval dialog](docs/images/screenshot-approve.png)
+
+Finally, CI continues to apply your plan. If you cancel, the workflow will end
+there and you can push a new commit to fix what you didn't like in the plan.
+
+![Screenshot of CI showing apply job](docs/images/screenshot-apply.png)
+
+
 ## Bootstraping this project
 
 _Note: this has not been thoroughly tested, yet._
