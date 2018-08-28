@@ -45,7 +45,7 @@ resource "aws_acm_certificate_validation" "cert" {
 # Route 53 record for the static site
 
 data "aws_route53_zone" "site" {
-  name         = "${var.domain}"
+  name         = "${var.zone}"
   private_zone = false
 }
 
