@@ -1,0 +1,38 @@
+version: 2
+jobs:
+  lint:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+      - terraform validate
+
+  plan:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+      - terraform plan
+
+  apply:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+      - terraform plan
+
+workflows:
+  version: 2
+  commit:
+    - lint
+    - plan:
+        requires:
+          - lint
+    - hold:
+        type: approval
+        requires:
+          - plan
+
+    - apply:
+        requires:
+          - hold
