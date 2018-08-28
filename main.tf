@@ -2,6 +2,11 @@ provider "aws" {
   region = "us-west-1"
 }
 
+variable "zone" {
+  description = "Zone to host these static sites."
+  default = "sites.adborden.net"
+}
+
 terraform {
   backend "s3" {
     bucket = "adborden-terraform"
@@ -11,7 +16,7 @@ terraform {
 }
 
 resource "aws_route53_zone" "main" {
-  name = "sites.adborden.net"
+  name = "${var.zone}"
 }
 
 ####################
@@ -21,6 +26,6 @@ resource "aws_route53_zone" "main" {
 module "site_example" {
   source = "./modules/site"
   host   = "example"
-  zone = "${aws_route53_zone.main.name}"
+  zone = "${var.zone}"
 }
 
