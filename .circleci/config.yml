@@ -37,6 +37,10 @@ workflows:
         type: approval
         requires:
           - plan
+        filters:
+          branches:
+            only:
+              - master
 
     - apply:
         requires:
