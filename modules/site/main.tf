@@ -11,21 +11,19 @@ provider "aws" {
 module "site" {
   source = "github.com/riboseinc/terraform-aws-s3-cloudfront-website"
 
-  fqdn                = "${var.fqdn}"
+  fqdn                = "${var.host}.${var.zone}"
   ssl_certificate_arn = "${aws_acm_certificate_validation.cert.certificate_arn}"
   allowed_ips         = "${var.allowed_ips}"
 
   index_document = "index.html"
   error_document = "404.html"
 
-  refer_secret = "${base64sha512("REFER-SECRET-19265125-${var.fqdn}-52865926")}"
-
   force_destroy = "true"
 }
 
 resource "aws_acm_certificate" "cert" {
   provider = "aws.cloudfront"
-  domain_name       = "${var.fqdn}"
+  domain_name       = "${var.host}.${var.zone}"
   validation_method = "DNS"
 }
 
@@ -47,13 +45,13 @@ resource "aws_acm_certificate_validation" "cert" {
 # Route 53 record for the static site
 
 data "aws_route53_zone" "site" {
-  name         = "${var.domain}"
+  name         = "${var.zone}"
   private_zone = false
 }
 
 resource "aws_route53_record" "web" {
   zone_id = "${data.aws_route53_zone.site.zone_id}"
-  name    = "${var.fqdn}"
+  name    = "${var.host}.${var.zone}"
   type    = "A"
 
   alias {
