@@ -1,3 +1,4 @@
+
 version: 2
 jobs:
   lint:
@@ -5,17 +6,23 @@ jobs:
       - image: hashicorp/terraform:light
     steps:
       - checkout
-      - terraform validate
+      - run: terraform validate
 
   plan:
     docker:
       - image: hashicorp/terraform:light
+    environment:
+      TF_WORKSPACE: production
     steps:
       - checkout
-      - terraform plan -out=plan.tfplan
+      - run: terraform init
+      - run: terraform select $TF_WORKSPACE
+      - run: terraform plan -out=plan.tfplan
       - persist_to_workspace:
           root: .
-          paths: plan.tfplan
+          paths:
+            - plan.tfplan
+            - .terraform
 
   apply:
     docker:
@@ -24,7 +31,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - terraform apply plan.tfplan
+      - run: terraform apply plan.tfplan
 
 workflows:
   version: 2
@@ -34,6 +41,7 @@ workflows:
       - plan:
           requires:
             - lint
+
       - hold:
           type: approval
           requires:
