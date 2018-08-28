@@ -1,9 +1,9 @@
-variable "fqdn" {
-  description = "The fully-qualified domain name of the resulting S3 website."
+variable "host" {
+  description = "The host name of the resulting S3 website (the part of the domain excluding the zone)."
 }
 
-variable "domain" {
-  description = "The domain name"
+variable "zone" {
+  description = "The zone to host this site."
   default     = "sites.adborden.net"
 }
 

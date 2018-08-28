@@ -20,7 +20,7 @@ resource "aws_route53_zone" "main" {
 
 module "site_example" {
   source = "./modules/site"
-  fqdn   = "example.${aws_route53_zone.main.name}"
-  domain = "${aws_route53_zone.main.name}"
+  host   = "example"
+  zone = "${aws_route53_zone.main.name}"
 }
 
