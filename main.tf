@@ -29,3 +29,8 @@ module "site_example" {
   zone = "${var.zone}"
 }
 
+module "site_open_disclosure_san_jose" {
+  source = "./modules/site"
+  host   = "open-disclosure-san-jose"
+  zone = "${var.zone}"
+}
