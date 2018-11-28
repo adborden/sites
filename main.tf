@@ -23,6 +23,12 @@ resource "aws_route53_zone" "main" {
 # Site declarations
 ####################
 
+module "site_codewithme" {
+  source = "./modules/site"
+  host   = "codewithme"
+  zone   = "${var.zone}"
+}
+
 module "site_example" {
   source = "./modules/site"
   host   = "example"
