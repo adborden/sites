@@ -22,7 +22,7 @@ module "site" {
 }
 
 resource "aws_acm_certificate" "cert" {
-  provider = "aws.cloudfront"
+  provider          = "aws.cloudfront"
   domain_name       = "${var.host}.${var.zone}"
   validation_method = "DNS"
 }

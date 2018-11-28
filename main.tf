@@ -4,7 +4,7 @@ provider "aws" {
 
 variable "zone" {
   description = "Zone to host these static sites."
-  default = "sites.adborden.net"
+  default     = "sites.adborden.net"
 }
 
 terraform {
@@ -23,14 +23,20 @@ resource "aws_route53_zone" "main" {
 # Site declarations
 ####################
 
+module "site_codewithme" {
+  source = "./modules/site"
+  host   = "codewithme"
+  zone   = "${var.zone}"
+}
+
 module "site_example" {
   source = "./modules/site"
   host   = "example"
-  zone = "${var.zone}"
+  zone   = "${var.zone}"
 }
 
 module "site_open_disclosure_san_jose" {
   source = "./modules/site"
   host   = "open-disclosure-san-jose"
-  zone = "${var.zone}"
+  zone   = "${var.zone}"
 }
