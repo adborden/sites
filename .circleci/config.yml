@@ -28,16 +28,10 @@ workflows:
   commit:
     jobs:
       - plan
-
-      - hold:
-          type: approval
+      - apply:
           requires:
             - plan
           filters:
             branches:
               only:
                 - master
-
-      - apply:
-          requires:
-            - hold
