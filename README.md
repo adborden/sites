@@ -32,7 +32,7 @@ jobs:
       AWS_DEFAULT_REGION=us-west-1
     steps:
     - checkout
-    - run: aws s3 cp index.html s3://example.sites.adborden.net/
+    - run: aws s3 sync _site s3://example.sites.adborden.net/
 
 workflows:
   version: 2
