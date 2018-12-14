@@ -35,6 +35,12 @@ module "site_example" {
   zone   = "${var.zone}"
 }
 
+module "site_future_of_california" {
+  source = "./modules/site"
+  host   = "future-of-california"
+  zone   = "${var.zone}"
+}
+
 module "site_open_disclosure_san_jose" {
   source = "./modules/site"
   host   = "open-disclosure-san-jose"
