@@ -1,12 +1,4 @@
-provider "aws" {
-  region = "us-east-1"
-  alias  = "cloudfront"
-}
 
-provider "aws" {
-  region = "us-west-1"
-  alias  = "main"
-}
 
 module "site" {
   source = "github.com/riboseinc/terraform-aws-s3-cloudfront-website"
